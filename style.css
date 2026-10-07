@@ -1,0 +1,366 @@
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-dark: #050816;
+    --bg-mid: #0b1630;
+    --panel: rgba(15, 23, 42, 0.88);
+    --panel-light: rgba(255, 255, 255, 0.07);
+    --text: #f8fafc;
+    --muted: #94a3b8;
+    --cyan: #38bdf8;
+    --yellow: #facc15;
+    --green: #4ade80;
+    --red: #fb7185;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--text);
+    background:
+        radial-gradient(circle at 50% 10%, rgba(56, 189, 248, 0.18), transparent 30%),
+        radial-gradient(circle at 20% 80%, rgba(250, 204, 21, 0.08), transparent 25%),
+        linear-gradient(135deg, var(--bg-dark), var(--bg-mid));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    overflow-x: hidden;
+}
+
+/* Decorative light beams */
+
+body::before,
+body::after {
+    content: "";
+    position: fixed;
+    pointer-events: none;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.18;
+}
+
+body::before {
+    background: var(--cyan);
+    top: -120px;
+    left: -100px;
+}
+
+body::after {
+    background: var(--yellow);
+    bottom: -120px;
+    right: -100px;
+}
+
+#game {
+    width: 100%;
+    max-width: 900px;
+    position: relative;
+    z-index: 1;
+}
+
+section {
+    background: var(--panel);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 24px;
+    padding: 36px;
+    box-shadow:
+        0 25px 70px rgba(0, 0, 0, 0.45),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(16px);
+}
+
+/* Start screen */
+
+#start-screen {
+    text-align: center;
+}
+
+#start-screen::before {
+    content: "💡";
+    display: block;
+    font-size: 72px;
+    margin-bottom: 5px;
+    animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        filter: drop-shadow(0 0 5px rgba(250, 204, 21, 0.3));
+        transform: scale(1);
+    }
+
+    to {
+        filter: drop-shadow(0 0 25px rgba(250, 204, 21, 0.9));
+        transform: scale(1.05);
+    }
+}
+
+h1 {
+    text-align: center;
+    font-size: clamp(32px, 6vw, 52px);
+    margin: 0 0 12px;
+    letter-spacing: -1px;
+}
+
+#start-screen h1 {
+    background: linear-gradient(90deg, #facc15, #38bdf8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+#start-screen p {
+    color: var(--muted);
+    font-size: 17px;
+    max-width: 600px;
+    margin: 0 auto 30px;
+}
+
+#player-name {
+    display: block;
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto 15px;
+    padding: 16px 18px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.07);
+    color: white;
+    font-size: 17px;
+    outline: none;
+}
+
+#player-name:focus {
+    border-color: var(--cyan);
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+}
+
+button {
+    border: none;
+    border-radius: 12px;
+    padding: 14px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition:
+        transform 0.15s ease,
+        background 0.15s ease,
+        border-color 0.15s ease;
+}
+
+button:hover {
+    transform: translateY(-2px);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+    transform: none;
+}
+
+/* Main buttons */
+
+#start-button,
+#restart-button,
+#next-button {
+    background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+    color: #03111d;
+    box-shadow: 0 8px 25px rgba(14, 165, 233, 0.25);
+}
+
+#start-button {
+    min-width: 180px;
+}
+
+/* Top information */
+
+.top-bar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.top-bar div {
+    background: var(--panel-light);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 14px 10px;
+    border-radius: 14px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 17px;
+}
+
+/* Timer */
+
+.top-bar div:nth-child(3) {
+    color: var(--yellow);
+}
+
+/* Progress */
+
+.progress {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+/* Question */
+
+#application {
+    color: var(--cyan);
+    font-size: 25px;
+    margin-top: 5px;
+    margin-bottom: 12px;
+}
+
+#question {
+    font-size: 21px;
+    line-height: 1.5;
+    margin-bottom: 28px;
+}
+
+/* Answer choices */
+
+#options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.option-button {
+    min-height: 70px;
+    text-align: left;
+    color: white;
+    background: rgba(255, 255, 255, 0.055);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    position: relative;
+    overflow: hidden;
+}
+
+.option-button::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: var(--cyan);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.option-button:hover:not(:disabled) {
+    background: rgba(56, 189, 248, 0.12);
+    border-color: rgba(56, 189, 248, 0.55);
+}
+
+.option-button:hover:not(:disabled)::before {
+    opacity: 1;
+}
+
+/* Feedback */
+
+#feedback {
+    min-height: 55px;
+    margin: 20px 0 10px;
+    padding: 12px 0;
+    font-weight: bold;
+    line-height: 1.5;
+}
+
+.correct {
+    color: var(--green);
+}
+
+.wrong {
+    color: var(--red);
+}
+
+#next-button {
+    margin-top: 5px;
+}
+
+/* Result */
+
+#result-screen {
+    text-align: center;
+}
+
+#result-screen h1 {
+    color: var(--yellow);
+}
+
+#result-screen h2 {
+    font-size: 42px;
+    margin: 20px 0;
+    color: var(--yellow);
+}
+
+#result-screen p {
+    font-size: 18px;
+    color: #cbd5e1;
+}
+
+#result-screen button {
+    margin-top: 20px;
+}
+
+/* Utility */
+
+.hidden {
+    display: none;
+}
+
+/* Mobile */
+
+@media (max-width: 650px) {
+
+    body {
+        padding: 10px;
+    }
+
+    section {
+        padding: 24px 18px;
+        border-radius: 18px;
+    }
+
+    #start-screen::before {
+        font-size: 58px;
+    }
+
+    .top-bar {
+        gap: 7px;
+    }
+
+    .top-bar div {
+        font-size: 14px;
+        padding: 11px 5px;
+    }
+
+    #application {
+        font-size: 21px;
+    }
+
+    #question {
+        font-size: 18px;
+    }
+
+    #options {
+        grid-template-columns: 1fr;
+    }
+
+    .option-button {
+        min-height: 60px;
+    }
+}
