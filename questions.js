@@ -564,3 +564,20 @@ const questions = [
     }
 
 ];
+// Distribute correct answers across A, B, C and D
+// without randomizing them on every attempt.
+
+questions.forEach((question) => {
+
+    const shift = (question.id - 1) % 4;
+
+    question.options = [
+        ...question.options.slice(shift),
+        ...question.options.slice(0, shift)
+    ];
+
+    question.answer =
+        (question.answer - shift + question.options.length)
+        % question.options.length;
+
+});

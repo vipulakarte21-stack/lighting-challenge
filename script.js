@@ -16,7 +16,7 @@ let score = 0;
 let correctAnswers = 0;
 
 let lives = 3;
-let timeLeft = 60;
+let timeLeft = 180;
 
 let timer = null;
 let playerName = "";
@@ -459,7 +459,7 @@ function startGame() {
 
     lives = 3;
 
-    timeLeft = 60;
+    timeLeft = 180;
 
     gameEnded = false;
 
@@ -760,7 +760,7 @@ function sendResult(status) {
 
 
     const timeTaken =
-        60 - timeLeft;
+        180 - timeLeft;
 
 
     const data = {
@@ -875,7 +875,7 @@ function endGame(
 
 
     finalTime.textContent =
-        60 - timeLeft;
+        180 - timeLeft;
 
 
     // Send result to Google Sheets
@@ -925,7 +925,7 @@ function restartGame() {
 
     lives = 3;
 
-    timeLeft = 60;
+    timeLeft = 180;
 
     gameQuestions = [];
 
@@ -934,7 +934,7 @@ function restartGame() {
         "0";
 
     timerDisplay.textContent =
-        "60";
+        "180";
 
     updateLivesDisplay();
 }
